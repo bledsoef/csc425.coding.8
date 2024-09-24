@@ -7,4 +7,35 @@ Mem:           7938        1320         205          61        6412        6241
 
 These numbers don't exactly match my intuition just because I was not aware of what a codespaces environment had.
 
-Question 2:
+Question 3:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        printf("Usage: %s <bytes>\n", argv[0]);
+        return 1;
+    }
+
+    int bytes = atoi(argv[1]);
+    int *arrayPtr = (int *)malloc(bytes);
+    if (arrayPtr == NULL) {
+        return 1;
+    }
+
+    int arraySize = (bytes) / sizeof(int); 
+    int *startPtr = arrayPtr;
+
+    while (1) {
+        printf("%d ", *arrayPtr);
+        arrayPtr++; 
+
+        if (arrayPtr == startPtr + arraySize) {
+            arrayPtr = startPtr;
+        }
+    }
+
+    free(startPtr);
+    return 0;
+}
