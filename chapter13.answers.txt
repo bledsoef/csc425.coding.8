@@ -1,0 +1,10 @@
+Question 1:
+Done
+
+Question 2:
+              total        used        free      shared  buff/cache   available
+Mem:           7938        1320         205          61        6412        6241
+
+These numbers don't exactly match my intuition just because I was not aware of what a codespaces environment had.
+
+Question 2:
