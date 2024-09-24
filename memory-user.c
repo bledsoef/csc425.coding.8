@@ -17,7 +17,6 @@ int main(int argc, char *argv[]) {
     int *startPtr = arrayPtr;
 
     while (1) {
-        printf("%d ", *arrayPtr);
         arrayPtr++; 
 
         if (arrayPtr == startPtr + arraySize) {

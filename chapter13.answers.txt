@@ -1,14 +1,14 @@
 Question 1:
 Done
-
+```
 Question 2:
               total        used        free      shared  buff/cache   available
 Mem:           7938        1320         205          61        6412        6241
-
+```
 These numbers don't exactly match my intuition just because I was not aware of what a codespaces environment had.
 
 Question 3:
-
+```
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -39,3 +39,124 @@ int main(int argc, char *argv[]) {
     free(startPtr);
     return 0;
 }
+```
+Question 4:
+```
+./memory-user 8
+              total        used        free      shared  buff/cache   available
+Mem:           7938        1314         305          63        6317        6244
+```
+```
+./memory-user 32768
+              total        used        free      shared  buff/cache   available
+Mem:           7938        1325         288          64        6324        6233
+```
+```
+./memory-user 1048576
+              total        used        free      shared  buff/cache   available
+Mem:           7938        1326         283          64        6328        6232
+```
+```
+./memory-user 33554432
+              total        used        free      shared  buff/cache   available
+Mem:           7938        1339         264          64        6334        6220
+```
+Once the programs are killed:
+```
+              total        used        free      shared  buff/cache   available
+Mem:           7938        1096         246          58        6596        6468
+```
+Question 5:
+Done
+
+Question 6:
+Here is the output:
+```
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+codespa+       1  0.0  0.0   1136   640 ?        Ss   11:21   0:00 /sbin/docker-init -- /bin/sh -c echo Container started trap "exit 0" 15 /usr/
+codespa+       7  0.0  0.0   7236  1792 ?        S    11:21   0:00 sleep infinity
+root          35  0.0  0.0  12196  3480 ?        Ss   11:21   0:00 sshd: /usr/sbin/sshd [listener] 0 of 10-100 startups
+codespa+     176  0.0  0.0   2616  1536 ?        Ss   11:22   0:00 /bin/sh
+root         202  0.0  0.0   2616  1408 ?        Ss   11:22   0:00 /bin/sh
+codespa+     417  0.0  0.0   2624  1664 ?        Ss   11:22   0:00 sh /home/codespace/.vscode-remote/bin/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba4
+codespa+     447  1.0  1.0 1310740 83084 ?       Sl   11:22   0:02 /vscode/bin/linux-x64/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/node /vscode/b
+codespa+     565  3.4  3.7 22482136 301212 ?     Sl   11:22   0:09 /vscode/bin/linux-x64/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/node --dns-res
+codespa+     625  0.0  0.6 1240720 51684 ?       Sl   11:22   0:00 /vscode/bin/linux-x64/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/node /vscode/b
+codespa+    1066  0.2  0.7 1116328 59476 ?       Sl   11:22   0:00 /vscode/bin/linux-x64/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/node /vscode/b
+codespa+    1077  0.0  0.1  16812 11520 pts/0    Ss   11:22   0:00 /bin/bash --init-file /vscode/bin/linux-x64/38c31bc77e0dd6ae88a4e9cc93428cc27
+codespa+    1532  0.0  0.0   2616  1536 ?        Ss   11:22   0:00 /bin/sh
+root        1586  0.0  0.0   2616  1536 ?        Ss   11:22   0:00 /bin/sh
+root        2156  0.0  0.9 1982996 76076 ?       Sl   11:22   0:00 dockerd --dns 168.63.129.16
+root        2163  0.0  0.5 1798848 44048 ?       Ssl  11:22   0:00 containerd --config /var/run/docker/containerd/containerd.toml
+codespa+    3962  0.9  0.1  16680 11632 pts/1    Ss   11:26   0:00 /bin/bash --init-file /vscode/bin/linux-x64/38c31bc77e0dd6ae88a4e9cc93428cc27
+codespa+    4439 95.0  0.0   2500  1024 pts/1    R+   11:26   0:03 ./memory-user 16
+codespa+    4468  0.0  0.0   2620  1408 ?        S    11:26   0:00 /bin/sh -c "/vscode/bin/linux-x64/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/ou
+codespa+    4469  0.0  0.0   8628  3200 ?        S    11:26   0:00 /bin/bash /vscode/bin/linux-x64/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/out/
+codespa+    4473  0.0  0.0   7240  1792 ?        S    11:26   0:00 sleep 1
+codespa+    4481  0.0  0.0  10624  3200 pts/0    R+   11:26   0:00 ps auxw
+```
+It is a little weird since I am in a codespace but I am seleecting ./memory-user 16 process with the PID 4439
+
+Question 7:
+```
+@bledsoef ➜ /workspaces/csc425.coding.8 (main) $ pmap 4439 -X
+4439:   ./memory-user 16
+         Address Perm   Offset Device   Inode Size  Rss Pss Pss_Dirty Referenced Anonymous KSM LazyFree ShmemPmdMapped FilePmdMapped Shared_Hugetlb Private_Hugetlb Swap SwapPss Locked THPeligible Mapping
+    5bd420927000 r--p 00000000  07:05 1310774    4    4   4         0          4         0   0        0              0             0              0               0    0       0      0           0 memory-user
+    5bd420928000 r-xp 00001000  07:05 1310774    4    4   4         0          4         0   0        0              0             0              0               0    0       0      0           0 memory-user
+    5bd420929000 r--p 00002000  07:05 1310774    4    0   0         0          0         0   0        0              0             0              0               0    0       0      0           0 memory-user
+    5bd42092a000 r--p 00002000  07:05 1310774    4    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 memory-user
+    5bd42092b000 rw-p 00003000  07:05 1310774    4    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 memory-user
+    5bd420bc5000 rw-p 00000000  00:00       0  132    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 [heap]
+    7b2bcc45a000 r--p 00000000  00:2d  132009  136  136   7         0        136         0   0        0              0             0              0               0    0       0      0           0 libc-2.31.so
+    7b2bcc47c000 r-xp 00022000  00:2d  132009 1504  656  42         0        656         0   0        0              0             0              0               0    0       0      0           0 libc-2.31.so
+    7b2bcc5f4000 r--p 0019a000  00:2d  132009  312  112   6         0        112         0   0        0              0             0              0               0    0       0      0           0 libc-2.31.so
+    7b2bcc642000 r--p 001e7000  00:2d  132009   16   16  16        16         16        16   0        0              0             0              0               0    0       0      0           0 libc-2.31.so
+    7b2bcc646000 rw-p 001eb000  00:2d  132009    8    8   8         8          8         8   0        0              0             0              0               0    0       0      0           0 libc-2.31.so
+    7b2bcc648000 rw-p 00000000  00:00       0   24   20  20        20         20        20   0        0              0             0              0               0    0       0      0           0 
+    7b2bcc658000 r--p 00000000  00:2d  131987    4    4   0         0          4         0   0        0              0             0              0               0    0       0      0           0 ld-2.31.so
+    7b2bcc659000 r-xp 00001000  00:2d  131987  140  140   8         0        140         0   0        0              0             0              0               0    0       0      0           0 ld-2.31.so
+    7b2bcc67c000 r--p 00024000  00:2d  131987   32   32   2         0         32         0   0        0              0             0              0               0    0       0      0           0 ld-2.31.so
+    7b2bcc685000 r--p 0002c000  00:2d  131987    4    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 ld-2.31.so
+    7b2bcc686000 rw-p 0002d000  00:2d  131987    4    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 ld-2.31.so
+    7b2bcc687000 rw-p 00000000  00:00       0    4    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 
+    7fff952cf000 rw-p 00000000  00:00       0  136   16  16        16         16        16   0        0              0             0              0               0    0       0      0           0 [stack]
+    7fff953f0000 r--p 00000000  00:00       0   16    0   0         0          0         0   0        0              0             0              0               0    0       0      0           0 [vvar]
+    7fff953f4000 r-xp 00000000  00:00       0    8    4   0         0          4         0   0        0              0             0              0               0    0       0      0           0 [vdso]
+ffffffffff600000 --xp 00000000  00:00       0    4    0   0         0          0         0   0        0              0             0              0               0    0       0      0           0 [vsyscall]
+                                              ==== ==== === ========= ========== ========= === ======== ============== ============= ============== =============== ==== ======= ====== =========== 
+                                              2504 1176 157        84       1176        84   0        0              0             0              0               0    0       0      0           0 KB 
+```
+We still have the code stack and heap, but in additional we also have vvar, vdso, and vsyscall at the end o fthe address space "below" the stack.
+
+Question 8:
+
+```
+@bledsoef ➜ /workspaces/csc425.coding.8 (main) $ pmap 6548 -X
+6548:   ./memory-user 32768
+         Address Perm   Offset Device   Inode Size  Rss Pss Pss_Dirty Referenced Anonymous KSM LazyFree ShmemPmdMapped FilePmdMapped Shared_Hugetlb Private_Hugetlb Swap SwapPss Locked THPeligible Mapping
+    5d061519b000 r--p 00000000  07:05 1310774    4    4   4         0          4         0   0        0              0             0              0               0    0       0      0           0 memory-user
+    5d061519c000 r-xp 00001000  07:05 1310774    4    4   4         0          4         0   0        0              0             0              0               0    0       0      0           0 memory-user
+    5d061519d000 r--p 00002000  07:05 1310774    4    0   0         0          0         0   0        0              0             0              0               0    0       0      0           0 memory-user
+    5d061519e000 r--p 00002000  07:05 1310774    4    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 memory-user
+    5d061519f000 rw-p 00003000  07:05 1310774    4    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 memory-user
+    5d061560c000 rw-p 00000000  00:00       0  132    8   8         8          8         8   0        0              0             0              0               0    0       0      0           0 [heap]
+    753aa4040000 r--p 00000000  00:2d  132009  136  136   7         0        136         0   0        0              0             0              0               0    0       0      0           0 libc-2.31.so
+    753aa4062000 r-xp 00022000  00:2d  132009 1504  568  36         0        568         0   0        0              0             0              0               0    0       0      0           0 libc-2.31.so
+    753aa41da000 r--p 0019a000  00:2d  132009  312   88   5         0         88         0   0        0              0             0              0               0    0       0      0           0 libc-2.31.so
+    753aa4228000 r--p 001e7000  00:2d  132009   16   16  16        16         16        16   0        0              0             0              0               0    0       0      0           0 libc-2.31.so
+    753aa422c000 rw-p 001eb000  00:2d  132009    8    8   8         8          8         8   0        0              0             0              0               0    0       0      0           0 libc-2.31.so
+    753aa422e000 rw-p 00000000  00:00       0   24   20  20        20         20        20   0        0              0             0              0               0    0       0      0           0 
+    753aa423e000 r--p 00000000  00:2d  131987    4    4   0         0          4         0   0        0              0             0              0               0    0       0      0           0 ld-2.31.so
+    753aa423f000 r-xp 00001000  00:2d  131987  140  140   8         0        140         0   0        0              0             0              0               0    0       0      0           0 ld-2.31.so
+    753aa4262000 r--p 00024000  00:2d  131987   32   32   2         0         32         0   0        0              0             0              0               0    0       0      0           0 ld-2.31.so
+    753aa426b000 r--p 0002c000  00:2d  131987    4    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 ld-2.31.so
+    753aa426c000 rw-p 0002d000  00:2d  131987    4    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 ld-2.31.so
+    753aa426d000 rw-p 00000000  00:00       0    4    4   4         4          4         4   0        0              0             0              0               0    0       0      0           0 
+    7ffc3de45000 rw-p 00000000  00:00       0  136   20  20        20         20        20   0        0              0             0              0               0    0       0      0           0 [stack]
+    7ffc3df21000 r--p 00000000  00:00       0   16    0   0         0          0         0   0        0              0             0              0               0    0       0      0           0 [vvar]
+    7ffc3df25000 r-xp 00000000  00:00       0    8    4   0         0          4         0   0        0              0             0              0               0    0       0      0           0 [vdso]
+ffffffffff600000 --xp 00000000  00:00       0    4    0   0         0          0         0   0        0              0             0              0               0    0       0      0           0 [vsyscall]
+                                              ==== ==== === ========= ========== ========= === ======== ============== ============= ============== =============== ==== ======= ====== =========== 
+                                              2504 1072 158        92       1072        92   0        0              0             0              0               0    0       0      0           0 KB 
+```
